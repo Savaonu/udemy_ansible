@@ -1,5 +1,5 @@
 -
-  name: Test connectivity to targer servers
+  name: Test connectivity to target servers
     hosts: all
     tasks:
       - name: Ping test
