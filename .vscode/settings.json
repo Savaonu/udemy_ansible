@@ -1,0 +1,5 @@
+{
+    "yaml.schemas": {
+        "https://json.schemastore.org/yamllint.json": "file:///c%3A/Users/alexandru.sava/Desktop/Academy/Udemy/udemy_ansible/exercise-0-pingtest/playbook-pingtest.yaml"
+    }
+}
