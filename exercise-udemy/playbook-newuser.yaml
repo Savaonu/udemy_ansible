@@ -6,17 +6,19 @@
     user:
       name: ansible
       comment: Ansible user
-      group: root
+      group: wheel
       generate_ssh_key: yes
       ssh_key_type: rsa
       ssh_key_file: .ssh/id_rsa
   - name: No passw in sudoers
-    sudoers:
-      user: ansible 
-      nopassword: no 
-      commands: ALL
+    lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+        validate: visudo -cf %s
   - name: Copy authorized keys file 
     copy:
-      src: /home/ansibe/.ssh/authorized_keys
-      dest: /home/ansibe/.ssh/authorized_keys
-      mode: 0644
+      src: /home/ansible/.ssh/authorized_keys
+      dest: /home/ansible/.ssh/
+      mode: 0600
