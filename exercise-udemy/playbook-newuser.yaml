@@ -20,6 +20,3 @@
       src: /home/ansibe/.ssh/authorized_keys
       dest: /home/ansibe/.ssh/authorized_keys
       mode: 0644
-
-
-~
