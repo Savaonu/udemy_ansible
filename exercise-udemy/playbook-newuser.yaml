@@ -9,6 +9,9 @@
       generate_ssh_key: yes
       ssh_key_type: rsa
       ssh_key_file: .ssh/id_rsa
+  - name: Check for sudoers entry
+    shell: grep -c ansible /etc/sudoers
+    register: ansible_count
   - name: No passw in sudoers
     lineinfile:
         dest: /etc/sudoers
@@ -16,6 +19,7 @@
         insertafter: '^# %wheel'
         line: 'ansible ALL=(ALL) NOPASSWD: ALL'
         validate: visudo -cf %s
+    when: ansible_count.stdout == "0"
   - name: Copy authorized keys file 
     copy:
       src: /home/ansible/.ssh/authorized_keys
