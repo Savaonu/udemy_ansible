@@ -1,0 +1,34 @@
+- name: Configure system
+  host: all
+  gather_facts: yes
+  tasks:
+    - name: Update to latest version
+      yum:
+        name: "*"
+        state: latest
+        exclude: kernel*
+    - name: Disable SELinux
+      selinux:
+        state: disabled
+    - name: Stop and Disable Firewalld
+      service:
+        name: Firewalld
+        state: stopped
+        enabled: False
+    - name: Set hostname
+      hostname:
+        name: {{ inventory_hostname }}
+    - name: Prin all available facts 
+      debug:
+        var: ansible_facts
+        
+
+    #- name: Install Docker
+    #  yum_repository:
+     #   name: docker
+      #  description: Docker repository
+      #  baseurl: "https://download.docker.com/linux/{{ ansible_distribution }}/{{ ansible_distribution_major_version }}/$basearch/stable"
+
+
+
+
