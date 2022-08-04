@@ -38,7 +38,8 @@
         enabled: true
         gpgcheck: true
         gpgkey: "https://download.docker.com/linux/{{ mydistribution }}/gpg"
-
+      become_user: root
+      
     - name: Install Docker
       ansible.builtin.yum:
         name:
