@@ -6,27 +6,53 @@
         name: "*"
         state: latest
         exclude: kernel*
+
+##### SELinux #####
     - name: Disable SELinux
       selinux:
         state: disabled
+##### Firewall #####
     - name: Stop and Disable Firewalld
       service:
-        name: Firewalld
+        name: firewalld
         state: stopped
         enabled: False
+##### Docker #####
     - name: Set hostname
       hostname:
         name: "{{ inventory_hostname }}"
-    - name: Prin all available facts 
-      debug:
-        var: ansible_facts
-        
 
-    #- name: Install Docker
-    #  yum_repository:
-     #   name: docker
-      #  description: Docker repository
-      #  baseurl: "https://download.docker.com/linux/{{ ansible_distribution }}/{{ ansible_distribution_major_version }}/$basearch/stable"
+    - name: Set mydistribution
+      set_fact:
+        mydistribution: "{{ 'centos' if (ansible_distribution == 'CentOS') else (ansible_distribution | lower) }}"
+    - name: Add signing key
+      ansible.builtin.rpm_key:
+        key: "https://download.docker.com/linux/{{ mydistribution }}/gpg"
+        state: present
+
+    - name: Add repository into repo.d list
+      ansible.builtin.yum_repository:
+        name: docker
+        description: docker repository
+        baseurl: "https://download.docker.com/linux/{{ mydistribution }}/$releasever/$basearch/stable"
+        enabled: true
+        gpgcheck: true
+        gpgkey: "https://download.docker.com/linux/{{ mydistribution }}/gpg"
+
+    - name: Install Docker
+      ansible.builtin.yum:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: latest
+        update_cache: true
+
+    - name: Start Docker
+      ansible.builtin.service:
+        name: "docker"
+        enabled: true
+        state: started
 
 
 

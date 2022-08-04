@@ -11,7 +11,7 @@
       ssh_key_file: .ssh/id_rsa
   - name: Delete existing lines with user ansible
     lineinfile:
-      dest: /etc/sudeoers
+      dest: /etc/sudoers
       state: absent 
       regex: 'ansible'
   - name: Check for sudoers entry
