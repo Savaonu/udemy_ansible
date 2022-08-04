@@ -24,7 +24,7 @@
       insertafter: '^# %wheel'
       line: 'ansible ALL=(ALL) NOPASSWD: ALL'
       validate: visudo -cf %s
-    when: ansible_count.stdout != "0"
+    when: ansible_count.stdout == 0
   - name: Copy authorized keys file 
     copy:
       src: /home/ansible/.ssh/authorized_keys
