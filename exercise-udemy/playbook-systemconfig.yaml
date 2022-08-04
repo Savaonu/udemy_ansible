@@ -1,6 +1,5 @@
 - name: Configure system
   host: all
-  gather_facts: yes
   tasks:
     - name: Update to latest version
       yum:
