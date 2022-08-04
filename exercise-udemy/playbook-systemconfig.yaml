@@ -1,5 +1,5 @@
 - name: Configure system
-  host: all
+  hosts: all
   tasks:
     - name: Update to latest version
       yum:
