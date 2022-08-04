@@ -1,5 +1,6 @@
 - name: Configure system
   hosts: all
+  become: true
   tasks:
     - name: Update to latest version
       yum:
@@ -38,8 +39,7 @@
         enabled: true
         gpgcheck: true
         gpgkey: "https://download.docker.com/linux/{{ mydistribution }}/gpg"
-      become_user: root
-
+        
     - name: Install Docker
       ansible.builtin.yum:
         name:
