@@ -17,7 +17,7 @@
         enabled: False
     - name: Set hostname
       hostname:
-        name: {{ inventory_hostname }}
+        name: "{{ inventory_hostname }}"
     - name: Prin all available facts 
       debug:
         var: ansible_facts
