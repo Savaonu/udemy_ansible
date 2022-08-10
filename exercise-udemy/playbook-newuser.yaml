@@ -28,11 +28,11 @@
       line: 'ansible ALL=(ALL) NOPASSWD: ALL'
       validate: visudo -cf %s
     when: ansible_count.stdout == "0"
-  - name: Create authorized_kes file 
-    authorized_keys:
-      user: ansible 
-      state: present
-      key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+  #- name: Create authorized_kes file 
+   # authorized_keys:
+    #  user: ansible 
+     # state: present
+      #key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
   - name: Copy authorized keys file 
     copy:
       src: /home/ansible/.ssh/authorized_keys
