@@ -12,15 +12,18 @@
       generate_ssh_key: yes
       ssh_key_type: rsa
       ssh_key_file: .ssh/id_rsa
+
   - name: Delete existing lines with user ansible
     lineinfile:
       dest: /etc/sudoers
       state: absent 
       regex: 'ansible'
+
   - name: Check for sudoers entry
     shell: grep -c ansible /etc/sudoers || true
     register: ansible_count
-  - name: No passw in sudoers
+
+  - name: Create entry in sudoers for ansible
     lineinfile:
       dest: /etc/sudoers
       state: present
@@ -28,11 +31,13 @@
       line: 'ansible ALL=(ALL) NOPASSWD: ALL'
       validate: visudo -cf %s
     when: ansible_count.stdout == "0"
-  - name: Create authorized_kes file 
+
+  - name: Create authorized_keys file 
     authorized_key:
       user: ansible 
       state: present
       key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
+      
   - name: Copy authorized keys file 
     copy:
       src: /home/ansible/.ssh/authorized_keys

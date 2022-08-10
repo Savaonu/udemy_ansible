@@ -1,5 +1,6 @@
 - name: Configure system
   hosts: all
+  strategy: debug
   become: true
   tasks:
 
