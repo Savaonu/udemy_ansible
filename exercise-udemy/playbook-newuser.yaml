@@ -5,6 +5,9 @@
   - name: Create User
     user:
       name: ansible
+      shell: /bin/bash
+      groups: root
+      append: yes
       comment: Ansible user
       generate_ssh_key: yes
       ssh_key_type: rsa
@@ -25,8 +28,15 @@
       line: 'ansible ALL=(ALL) NOPASSWD: ALL'
       validate: visudo -cf %s
     when: ansible_count.stdout == "0"
+  - name: Create authorized_keys file
+    authorized_keys:
+      user: ansible 
+      state: present
+      key: "{{ lookup('file', '/home/ansible/.ssh/id_rsa.pub') }}"
   - name: Copy authorized keys file 
     copy:
       src: /home/ansible/.ssh/authorized_keys
       dest: /home/ansible/.ssh/
+      owner: ansible 
+      group: ansible 
       mode: 0600
