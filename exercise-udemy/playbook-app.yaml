@@ -72,8 +72,14 @@
       src: /home/ansible/GIT/udemy_ansible/exercise-udemy/db-load-script.sql
       dest: /opt/academia
 
+  - name: Create a directory if it does not exist
+    file:
+      path: /opt/academia/
+      state: directory
+      mode: '0755'
+      
   - name: Create ecom database
-    command: mysql -uroot -p"{{ mysql_root_password }}"  < /opt/academia/db-load-script.sql
+    shell: mysql -uroot -p"{{ mysql_root_password }}"  < /opt/academia/db-load-script.sql
   
   
 
