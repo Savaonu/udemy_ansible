@@ -24,9 +24,9 @@
       name: "{{ tools }}"
       state: present
 
-  - name: mysql root passwod 
-    shell: grep 'temporary password' /var/log/mysqld.log | awk -F 'localhost:\ ' '{print $2}'
-    register: mysql_root_password
+  #- name: mysql root passwod 
+   # shell: grep 'temporary password' /var/log/mysqld.log | awk -F 'localhost:\ ' '{print $2}'
+    #register: mysql_root_password
 
   - name: Configure httpd
     command: sed -i 's/index.html/index.php/g' /etc/httpd/conf/httpd.conf
