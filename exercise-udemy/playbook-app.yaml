@@ -2,6 +2,7 @@
   hosts: ansible_target2
   become: true
   vars:
+    mysql_root_password: passwd
     tools:
       - mysql-server
       - httpd 
@@ -37,6 +38,7 @@
     with_items:
       - httpd
       - mysqld 
+
   - name: Update MYSQL root password
     mysql_user:
       name: root 
