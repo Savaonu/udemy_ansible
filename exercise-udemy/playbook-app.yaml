@@ -3,12 +3,17 @@
   become: true
   vars:
     tools:
-      - mariadb-server
+      - mysql-server
       - httpd 
       - php 
       - php-mysql
       - git
   tasks:
+
+  - name: MYSQL settings (yum repo)
+    shell: |
+      curl -sSLO https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+      rpm -ivh mysql80-community-release-el7-5.noarch.rpm
 
   - name: Install services 
     yum:
