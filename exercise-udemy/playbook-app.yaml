@@ -13,7 +13,7 @@
   - name: MYSQL settings (yum repo)
     shell: |
       curl -sSLO https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
-      rpm -ivh mysql80-community-release-el7-5.noarch.rpm
+      rpm -ivh mysql80-community-release-el7-5.noarch.rpm || /bin/true
 
   - name: Install services 
     yum:
@@ -27,7 +27,7 @@
     shell: |
       git clone https://github.com/kodekloudhub/learning-app-ecommerce.git /var/www/html/
       sudo sed -i 's/172.20.1.101/localhost/g' /var/www/html/index.php
-
+ 
 
   - name: Start services service 
     service:
