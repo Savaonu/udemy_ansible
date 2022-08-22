@@ -63,7 +63,7 @@
       - ::1
       - localhost
       - name: Copy the root credentials as .my.cnf file
-    template: src=root.cnf.j2 dest=~/.my.cnf mode=0600    
+    #:wq!template: src=root.cnf.j2 dest=~/.my.cnf mode=0600    
   
   - name: Copy db config 
     copy:
