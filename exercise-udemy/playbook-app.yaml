@@ -9,6 +9,9 @@
       - php 
       - php-mysql
       - git
+      - MySQL-python
+      - pip
+  
   tasks:
 
   - name: MYSQL settings (yum repo)
