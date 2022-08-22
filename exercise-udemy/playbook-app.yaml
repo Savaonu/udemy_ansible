@@ -29,11 +29,9 @@
       name: "{{ item }}"
       state: started
       enabled: True
-    with_item:
-      - httpd 
+    with_items:
+      - httpd
       - mysqld 
-      - 
-
   - name: Update MYSQL root password
     mysql_user:
       name: root 
