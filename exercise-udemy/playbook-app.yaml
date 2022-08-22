@@ -1,0 +1,52 @@
+- name: Configure app 
+  hosts: ansible_target2
+  become: true
+  vars:
+    tools:
+      - mariadb-server
+      - httpd 
+      - php 
+      - php-mysql
+      - git
+  tasks:
+
+  - name: Install services 
+    yum:
+      name: "{{ tools }}"
+      state: present
+  
+  - name: Configure httpd
+    command: sed -i 's/index.html/index.php/g' /etc/httpd/conf/httpd.conf
+
+  - name: Download GIT, update index.php
+    shell: |
+      git clone https://github.com/kodekloudhub/learning-app-ecommerce.git /var/www/html/
+      sudo sed -i 's/172.20.1.101/localhost/g' /var/www/html/index.php
+
+
+  - name: Start services service 
+    service:
+      name: "{{ tools }}"
+      state: started
+      enabled: True
+
+  - name: Update MYSQL root password
+    mysql_user:
+      name: root 
+      host: "{{ item }}"
+      password: "{{ mysql_root_password }}"
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+      check_implicit_admin: yes
+      priv: "*.*:ALL,GRANT"
+  
+  - name: Copy db config 
+    copy:
+      src: /home/ansible/GIT/udemy_ansible/exercise-udemy/db-load-script.sql
+      dest: /opt/academia
+
+  - name: Create ecom database
+    command: mysql -uroot -p"{{ mysql_root_password }}"  < /opt/academia/db-load-script.sql
+  
+  
+
