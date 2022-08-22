@@ -26,9 +26,13 @@
 
   - name: Start services service 
     service:
-      name: "{{ tools }}"
+      name: "{{ item }}"
       state: started
       enabled: True
+    with_items:
+      - httpd 
+      - mysqld 
+      - 
 
   - name: Update MYSQL root password
     mysql_user:
