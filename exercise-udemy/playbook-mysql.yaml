@@ -54,10 +54,10 @@
       state: directory
       mode: '0755'
 
-  - name: Security things
-    shell: |
-    mysqladmin -u root -p"{{ mysql_root_password }}" password "{{ new_mysql_root_password }}"
-    mysql -uroot -p"{{ new_mysql_root_password }}" < /opt/academia/mysql-secure.sql
+  #- name: Security things
+  #  shell: |
+  #  mysqladmin -u root -p {{ mysql_root_password }} password {{ new_mysql_root_password }}
+  #  mysql -uroot -p {{ new_mysql_root_password }} < /opt/academia/mysql-secure.sql
 
   
   - name: Start services service 
