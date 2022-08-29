@@ -30,6 +30,7 @@
 
   - name: Build app
     shell: |
+      source /etc/profile.d/maven_config.sh
        mvn -f /opt/academia/webapp/pom.xml clean package
 
   - name: Copy war to volume
