@@ -13,15 +13,48 @@
       dest: /opt/academia/caca
       version: master
 
-  - name: Create MySQL container
-    shell: |
-      docker run --detach --env MYSQL_ROOT_PASSWORD=dummypassword --env MYSQL_USER=todos-user --env MYSQL_PASSWORD=dummytodos --env MYSQL_DATABASE=todos --name mysql --publish 3306:3306 mysql:5.7
+  #- name: Create MySQL container
+  #  shell: |
+  #    docker run --detach --env MYSQL_ROOT_PASSWORD=dummypassword --env MYSQL_USER=todos-user --env MYSQL_PASSWORD=dummytodos --env MYSQL_DATABASE=todos --name mysql --publish 3306:3306 mysql:5.7
 
 
-  - name: Create App container
-    shell: |
-      docker container run -p 8080:9999 --link=mysql -e RDS_HOSTNAME=mysql --name app -d atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
+  #- name: Create App container
+  #  shell: |
+  #    docker container run -p 8080:8080 -v app-vol:/usr/local/tomcat/webapps --link=mysql -e RDS_HOSTNAME=mysql --name app -d  atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
 
+  - name: Creat MySQL container
+    docker_container:
+      name: mysql 
+      image: mysql:5.7
+      state: present
+      recreate: true 
+      exposed_ports: 
+        - "3306:3306"
+      env: 
+          MYSQL_ROOT_PASSWORD: "dummypassword"
+          MYSQL_USER: "todos-user  "
+          MYSQL_PASSWORD: "dummytodos"
+          MYSQL_DATABASE: "todos"
+  
+  - name: Creat App container
+    docker_container:
+      name: app 
+      image: atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
+      state: present
+      recreate: true 
+      detach: true
+      links: mysql 
+      exposed_ports: 
+        - "8080:9999"
+      volumes:
+        - app-vol:/usr/local/tomcat/webapps
+      env: 
+          RDS_HOSTNAME: "mysql"
+          MYSQL_USER: "todos-user  "
+          MYSQL_PASSWORD: "dummytodos"
+          MYSQL_DATABASE: "todos"
+
+  
 
   
   

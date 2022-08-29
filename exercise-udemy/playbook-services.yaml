@@ -1,0 +1,98 @@
+- name: Install and configure services 
+  hosts: ansible_target2
+  become: true
+  vars:
+    new_mysql_root_password: Passw.123
+    tools:
+      - mysql-server
+      - httpd 
+      - php 
+      - php-mysql
+      - git
+      - MySQL-python
+      - python3-pip.noarch
+      - wget
+      - java-11-openjdk-devel
+      # for docker compose 
+      - epel-release  
+      - python-pip  
+      - python-devel
+
+  tasks:
+
+  - name: Install services 
+    yum:
+      name: "{{ tools }}"
+      state: present
+  
+  - name: Create a directory if it does not exist
+    file:
+      path: /opt/academia/
+      state: directory
+      mode: '0755'
+
+  - name: Download maven 
+    get_url:
+      url: http://mirrors.ibiblio.org/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+      dest: /tmp/
+
+  - name: Copy maven config 
+    copy:
+      src: /home/ansible/GIT/udemy_ansible/exercise-udemy/maven_config.sh
+      dest: /etc/profile.d/
+      mode: 0755
+
+  - name: Install maven 
+    shell: |
+      tar xzf /tmp/apache-maven-3.6.3-bin.tar.gz -C /opt
+      ln -s /opt/apache-maven-3.6.3 /opt/maven
+      source /etc/profile.d/maven_config.sh
+
+
+#- name: Security things
+  #  shell: |
+  #  mysqladmin -u root -p {{ mysql_root_password }} password {{ new_mysql_root_password }}
+  #  mysql -uroot -p {{ new_mysql_root_password }} < /opt/academia/mysql-secure.sql
+
+  
+  #- name: Start services service 
+  #  service:
+  #    name: "{{ item }}"
+  #    state: started
+  #    enabled: True
+  #  with_items:
+  #    - httpd
+  #    - mysqld 
+#- name: Download maven 
+  #  shell:
+  #    wget https://www-us.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz -P /tmp
+
+ #- name: Get temporary root password
+  #  shell: grep 'temporary password' /var/log/mysqld.log | awk -F 'localhost:\ ' '{print $2}'
+  #  register: mysql_root_password
+
+#- name: MYSQL yum repo
+  #  shell: |
+  #    curl -sSLO https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm
+  #    rpm -ivh mysql80-community-release-el7-5.noarch.rpm || /bin/true
+
+
+#- name: update mysql root password for all root accounts
+   # mysql_user:
+    #  name: root
+     # host: "{{ item }}"
+      #password: "{{ mysql_root_password }}"
+      #login_user: root
+      #login_password: "{{ mysql_root_password }}"
+      #login_unix_socket: /var/lib/mysql/mysql.sock
+      #check_implicit_admin: yes
+      #priv: "*.*:ALL,GRANT"
+    #with_items:
+    #  - "{{ ansible_hostname }}"
+    #  - 127.0.0.1
+    #  - ::1
+    #  - localhost
+    #  - name: Copy the root credentials as .my.cnf file
+    #:wq!template: src=root.cnf.j2 dest=~/.my.cnf mode=0600  
+
+  
