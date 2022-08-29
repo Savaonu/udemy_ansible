@@ -73,6 +73,7 @@
     get_url:
       url: https://www-us.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
       dest: /tmp/
+    become: true
   
   - name: Copy maven config 
     copy:
