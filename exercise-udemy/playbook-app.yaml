@@ -25,6 +25,8 @@
   - name: Create a volume
     docker_volume:
       name: app-vol 
+    vars:
+      ansible_python_interpreter: /bin/python3
 
   - name: Build app
     shell: |
