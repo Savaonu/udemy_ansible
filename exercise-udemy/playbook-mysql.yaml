@@ -87,8 +87,8 @@
 
   - name: Install maven 
     shell: |
-      tar xzf /tmp/apache-maven-3.6.0-bin.tar.gz -C /opt
-      ln -s /opt/apache-maven-3.6.0 /opt/maven
+      tar xzf /tmp/apache-maven-3.6.3-bin.tar.gz -C /opt
+      ln -s /opt/apache-maven-3.6.3 /opt/maven
       source /etc/profile.d/maven.sh
 
 
