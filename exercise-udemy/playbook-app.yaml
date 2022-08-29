@@ -20,7 +20,7 @@
 
   - name: Create App container
     shell: |
-      docker container run -p 8080:8080 --link=mysql -e RDS_HOSTNAME=mysql -d atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
+      docker container run -p 8080:9999 --link=mysql -e RDS_HOSTNAME=mysql --name app -d atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
 
 
   
