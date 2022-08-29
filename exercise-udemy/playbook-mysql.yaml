@@ -83,13 +83,13 @@
     copy:
       src: /home/ansible/GIT/udemy_ansible/exercise-udemy/maven_config.sh
       dest: /etc/profile.d/
-      mode: 0744
+      mode: 0755
 
   - name: Install maven 
     shell: |
       tar xzf /tmp/apache-maven-3.6.3-bin.tar.gz -C /opt
       ln -s /opt/apache-maven-3.6.3 /opt/maven
-      source /etc/profile.d/maven.sh
+      source /etc/profile.d/maven_config.sh
 
 
 
