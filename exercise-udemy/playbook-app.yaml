@@ -31,7 +31,7 @@
   - name: Build app
     shell: |
       source /etc/profile.d/maven_config.sh
-       mvn -f /opt/academia/webapp/pom.xml clean package
+      mvn -f /opt/academia/webapp/pom.xml clean package
 
   - name: Copy war to volume
     shell: |
@@ -45,6 +45,7 @@
       state: started
       recreate: true 
       ports: 
+        - "3306:3306"
         - "3306:3306"
       env: 
           MYSQL_ROOT_PASSWORD: "dummypassword"
@@ -63,6 +64,7 @@
       detach: true
       links: mysql 
       ports: 
+        - "8080:8080"
         - "8080:8080"
       volumes:
         - app-vol:/usr/local/tomcat/webapps
