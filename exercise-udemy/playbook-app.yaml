@@ -35,6 +35,8 @@
           MYSQL_USER: "todos-user  "
           MYSQL_PASSWORD: "dummytodos"
           MYSQL_DATABASE: "todos"
+    vars:
+    ansible_python_interpreter: /bin/python3
   
   - name: Creat App container
     docker_container:
@@ -53,6 +55,8 @@
           MYSQL_USER: "todos-user  "
           MYSQL_PASSWORD: "dummytodos"
           MYSQL_DATABASE: "todos"
+    vars:
+    ansible_python_interpreter: /bin/python3
 
   
 

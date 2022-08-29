@@ -11,6 +11,7 @@
       - git
       - MySQL-python
       - python3-pip.noarch
+      - python3
       - wget
       - java-11-openjdk-devel
       # for docker compose 
