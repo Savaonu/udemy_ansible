@@ -70,14 +70,14 @@
       - httpd
       - mysqld 
 
-  #- name: Download maven 
-  #  get_url:
-  #    url: https://www-us.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
-  #    dest: /tmp/
-
   - name: Download maven 
-    shell:
-      wget https://www-us.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz -P /tmp
+    get_url:
+      url: http://mirrors.ibiblio.org/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+      dest: /tmp/
+
+  #- name: Download maven 
+  #  shell:
+  #    wget https://www-us.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz -P /tmp
 
   - name: Copy maven config 
     copy:
