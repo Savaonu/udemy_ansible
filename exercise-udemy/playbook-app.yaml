@@ -7,11 +7,11 @@
 
   tasks:
 
-  #- name: Downlaod git repo 
-  #  git:
-  #    repo: https://github.com/Savaonu/mysql_webapp.git
-  #    dest: /opt/academia/webapp
-  #    version: master
+  - name: Downlaod git repo 
+    git:
+      repo: https://github.com/Savaonu/mysql_webapp.git
+      dest: /opt/academia/webapp
+      version: master
 
   #- name: Create MySQL container
   #  shell: |
@@ -22,20 +22,20 @@
   #  shell: |
   #    docker container run -p 8080:8080 -v app-vol:/usr/local/tomcat/webapps --link=mysql -e RDS_HOSTNAME=mysql --name app -d  atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
 
-  #- name: Create a volume
-  #  docker_volume:
-  #    name: app-vol 
-  #  vars:
-  #    ansible_python_interpreter: /bin/python3
+  - name: Create a volume
+    docker_volume:
+      name: app-vol 
+    vars:
+      ansible_python_interpreter: /bin/python3
 
-  #- name: Build app
-  #  shell: |
-  #    source /etc/profile.d/maven_config.sh
-  #    mvn -f /opt/academia/webapp/pom.xml clean package
+  - name: Build app
+    shell: |
+      source /etc/profile.d/maven_config.sh
+      mvn -f /opt/academia/webapp/pom.xml clean package
 
-  #- name: Copy war to volume
-  #  shell: |
-  #    cp /opt/academia/webapp/target/todo-web-application-mysql.war  /var/lib/docker/volumes/app-vol/_data
+  - name: Copy war to volume
+    shell: |
+      cp /opt/academia/webapp/target/todo-web-application-mysql.war  /var/lib/docker/volumes/app-vol/_data
   
 
   - name: Creat MySQL container
@@ -56,25 +56,26 @@
     vars:
       ansible_python_interpreter: /bin/python3
   
-  #- name: Creat App container
-  #  docker_container:
-  #    name: app 
-  #    image: atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
-  #    state: started
-  #    recreate: true 
-  #    detach: true
-  #    links: mysql 
-  #    ports: 
-  #      - "8080:8080"
-  #    volumes:
-  #      - app-vol:/usr/local/tomcat/webapps
-  #    env: 
-  #        RDS_HOSTNAME: "mysql"
-  #        MYSQL_USER: "todos-user  "
-  #        MYSQL_PASSWORD: "dummytodos"
-  #        MYSQL_DATABASE: "todos"
-  #  vars:
-  #    ansible_python_interpreter: /bin/python3
+  - name: Creat App container
+    docker_container:
+      name: app 
+      image: atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
+      state: started
+      recreate: true 
+      detach: true
+      links: mysql 
+      ports: 
+        - "8080:8080"
+        - "8080"
+      volumes:
+        - app-vol:/usr/local/tomcat/webapps
+      env: 
+          RDS_HOSTNAME: "mysql"
+          MYSQL_USER: "todos-user  "
+          MYSQL_PASSWORD: "dummytodos"
+          MYSQL_DATABASE: "todos"
+    vars:
+      ansible_python_interpreter: /bin/python3
 
   
 
