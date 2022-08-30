@@ -45,8 +45,7 @@
       state: started
       recreate: true 
       ports: 
-        - "3306:3306"
-        - "3306:3306"
+        - "0.0.0.0:3306:3306"
       env: 
           MYSQL_ROOT_PASSWORD: "dummypassword"
           MYSQL_USER: "todos-user  "
@@ -55,26 +54,25 @@
     vars:
       ansible_python_interpreter: /bin/python3
   
-  - name: Creat App container
-    docker_container:
-      name: app 
-      image: atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
-      state: started
-      recreate: true 
-      detach: true
-      links: mysql 
-      ports: 
-        - "8080:8080"
-        - "8080:8080"
-      volumes:
-        - app-vol:/usr/local/tomcat/webapps
-      env: 
-          RDS_HOSTNAME: "mysql"
-          MYSQL_USER: "todos-user  "
-          MYSQL_PASSWORD: "dummytodos"
-          MYSQL_DATABASE: "todos"
-    vars:
-      ansible_python_interpreter: /bin/python3
+  #- name: Creat App container
+  #  docker_container:
+  #    name: app 
+  #    image: atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
+  #    state: started
+  #    recreate: true 
+  #    detach: true
+  #    links: mysql 
+  #    ports: 
+  #      - "8080:8080"
+  #    volumes:
+  #      - app-vol:/usr/local/tomcat/webapps
+  #    env: 
+  #        RDS_HOSTNAME: "mysql"
+  #        MYSQL_USER: "todos-user  "
+  #        MYSQL_PASSWORD: "dummytodos"
+  #        MYSQL_DATABASE: "todos"
+  #  vars:
+  #    ansible_python_interpreter: /bin/python3
 
   
 
