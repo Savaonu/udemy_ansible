@@ -15,9 +15,9 @@
       - wget
       - java-11-openjdk-devel
       # for docker compose 
-      - epel-release  
-      - python-pip  
-      - python-devel
+      #- epel-release  
+      #- python-pip  
+      #- python-devel
 
   tasks:
 
