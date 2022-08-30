@@ -22,20 +22,20 @@
   #  shell: |
   #    docker container run -p 8080:8080 -v app-vol:/usr/local/tomcat/webapps --link=mysql -e RDS_HOSTNAME=mysql --name app -d  atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
 
-  - name: Create a volume
-    docker_volume:
-      name: app-vol 
-    vars:
-      ansible_python_interpreter: /bin/python3
+  #- name: Create a volume
+  #  docker_volume:
+  #    name: app-vol 
+  #  vars:
+  #    ansible_python_interpreter: /bin/python3
 
-  - name: Build app
-    shell: |
-      source /etc/profile.d/maven_config.sh
-      mvn -f /opt/academia/webapp/pom.xml clean package
+  #- name: Build app
+  #  shell: |
+  #    source /etc/profile.d/maven_config.sh
+  #    mvn -f /opt/academia/webapp/pom.xml clean package
 
-  - name: Copy war to volume
-    shell: |
-      cp /opt/academia/webapp/target/todo-web-application-mysql.war  /var/lib/docker/volumes/app-vol/_data
+  #- name: Copy war to volume
+  #  shell: |
+  #    cp /opt/academia/webapp/target/todo-web-application-mysql.war  /var/lib/docker/volumes/app-vol/_data
   
 
   - name: Creat MySQL container
@@ -44,6 +44,8 @@
       image: mysql:5.7
       state: started
       recreate: true 
+      exposed_ports:
+        - "0.0.0.0:3306:3306"
       ports: 
         - "0.0.0.0:3306:3306"
       env: 
