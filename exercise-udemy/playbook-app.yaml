@@ -7,11 +7,11 @@
 
   tasks:
 
-  - name: Downlaod git repo 
-    git:
-      repo: https://github.com/Savaonu/mysql_webapp.git
-      dest: /opt/academia/webapp
-      version: master
+  #- name: Downlaod git repo 
+  #  git:
+  #    repo: https://github.com/Savaonu/mysql_webapp.git
+  #    dest: /opt/academia/webapp
+  #    version: master
 
   #- name: Create MySQL container
   #  shell: |
@@ -44,9 +44,9 @@
       image: mysql:5.7
       state: started
       recreate: true 
-      exposed_ports:
-        - "0.0.0.0:3306:3306"
       ports: 
+        - "0.0.0.0:3306:3306"
+      exposed_ports:
         - "0.0.0.0:3306:3306"
       env: 
           MYSQL_ROOT_PASSWORD: "dummypassword"
