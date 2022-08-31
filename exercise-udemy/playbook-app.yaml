@@ -59,7 +59,7 @@
       image: mysql:5.7
       state: started
       recreate: true 
-      ports: 
+      published_ports: 
         - "3306:3306"
       env: 
           MYSQL_ROOT_PASSWORD: "dummypassword"
@@ -77,7 +77,7 @@
       recreate: true 
       detach: true
       links: mysql 
-      ports: 
+      published_ports: 
         - "8080:8080"
       volumes:
         - app-vol:/usr/local/tomcat/webapps
