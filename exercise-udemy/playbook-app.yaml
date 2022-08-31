@@ -34,6 +34,8 @@
       #images: true
       volumes: true
       builder_cache: true
+    vars:
+      ansible_python_interpreter: /bin/python3
 
   - name: Create a volume
     docker_volume:
