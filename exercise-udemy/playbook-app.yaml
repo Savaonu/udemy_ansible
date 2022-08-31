@@ -7,6 +7,11 @@
 
   tasks:
 
+  - name: Cleanup old git pull
+    file:
+      path: /opt/academia/webapp 
+      state: absent
+
   - name: Downlaod git repo 
     git:
       repo: https://github.com/Savaonu/mysql_webapp.git
@@ -21,6 +26,15 @@
   #- name: Create App container
   #  shell: |
   #    docker container run -p 8080:8080 -v app-vol:/usr/local/tomcat/webapps --link=mysql -e RDS_HOSTNAME=mysql --name app -d  atingupta2005/todo-web-application-mysql:0.0.1-SNAPSHOT
+
+
+  - name: Prune  (for space problem)
+  community.docker.docker_prune:
+    containers: true
+    #images: true
+    volumes: true
+    builder_cache: true
+
 
   - name: Create a volume
     docker_volume:
