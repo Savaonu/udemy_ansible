@@ -30,10 +30,10 @@
 
   - name: Prune  (for space problem)
     community.docker.docker_prune:
-    containers: true
-    #images: true
-    volumes: true
-    builder_cache: true
+      containers: true
+      #images: true
+      volumes: true
+      builder_cache: true
 
   - name: Create a volume
     docker_volume:
